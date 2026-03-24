@@ -61,13 +61,11 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 
 - products
 - suppliers
-- purchases
-- purchase_details
 - clients
 - sales
 - sales_details
-- accounts_receivable
-- returns
+- employees
+- categories
 
 ---
 
