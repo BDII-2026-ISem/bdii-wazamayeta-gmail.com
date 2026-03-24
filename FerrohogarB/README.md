@@ -31,27 +31,36 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 
 ## 3. ÉPICAS DEL SISTEMA
 
+
+### Épicas del sistema
+
 | Épica | Descripción |
-|------|------------|
-| Gestión de productos | Administración del inventario |
-| Gestión de proveedores | Control de abastecimiento |
-| Gestión de compras | Registro de entradas de mercancía |
-| Gestión de clientes | Registro de clientes |
-| Gestión de ventas | Control de ventas |
-| Gestión de cuentas de cobro | Manejo de ventas a crédito |
-| Gestión de devoluciones | Control de productos devueltos |
+|--------------------------|----------------------------------------------------------------------------|
+| Gestión de productos | Administración de productos incluyendo su información proveedor y categoría |
+| Gestión de proveedores | Registro y control de los proveedores asociados a los productos |
+| Gestión de categorías | Organización y clasificación de los productos en diferentes categorías |
+| Gestión de clientes | Registro y administración de la información de los clientes |
+| Gestión de empleados | Administración del personal encargado de realizar las ventas |
+| Gestión de ventas | Registro y control de las ventas realizadas a los clientes |
+| Gestión de detalle de ventas | Control de los productos incluidos en cada venta cantidades y precios |
 
 ---
 
 ## 4. HISTORIAS DE USUARIO
 
-- Como administrador quiero registrar productos para controlar el inventario.
-- Como administrador quiero gestionar proveedores para asegurar el abastecimiento.
-- Como usuario quiero registrar compras para ingresar productos al sistema.
-- Como vendedor quiero registrar ventas para controlar ingresos.
-- Como usuario quiero consultar clientes para asociarlos a ventas.
-- Como administrador quiero gestionar cuentas de cobro para controlar créditos.
-- Como usuario quiero registrar devoluciones para mantener consistencia en el sistema.
+
+- Como administrador, quiero registrar productos para gestionar el inventario.
+- Como administrador, quiero actualizar la información de un producto.
+- Como administrador, quiero registrar proveedores para asociarlos a los productos.
+- Como administrador, quiero consultar proveedores registrados.
+- Como administrador, quiero crear categorías para organizar los productos.
+- Como administrador, quiero registrar clientes para realizar ventas.
+- Como administrador, quiero consultar la información de los clientes.
+- Como administrador, quiero registrar empleados que gestionan las ventas.
+- Como empleado, quiero registrar una venta para almacenar la transacción.
+- Como empleado, quiero calcular el total de la venta automáticamente.
+- Como empleado, quiero agregar productos a una venta con cantidad y precio.
+- Como empleado, quiero visualizar el detalle de productos de cada venta.
 
 ---
 
