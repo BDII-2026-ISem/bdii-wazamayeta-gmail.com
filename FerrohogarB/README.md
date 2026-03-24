@@ -75,6 +75,8 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 
 **products**
 - product_id
+- supplier_id(FK)
+- category_id(FK)
 - name
 - description
 - status
@@ -88,22 +90,6 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 - email
 - status
 
-**purchases**
-- purchase_id
-- date
-- status
-- subtotal
-- tax
-- total
-
-**purchase_details**
-- purchase_detail_id
-- purchase_id (FK)
-- product_id (FK)
-- quantity
-- unit_price
-- line_total
-- notes
 
 **clients**
 - client_id
@@ -116,8 +102,9 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 
 **sales**
 - sale_id
-- date
-- status
+- client_id(FK)
+- employee_id(FK)
+- sale_date
 - subtotal
 - tax
 - total
@@ -131,31 +118,27 @@ Diseñar e implementar una base de datos relacional para el sistema FerroHogar e
 - line_total
 - notes
 
-**accounts_receivable**
-- accounts_receivable_id
-- date
-- status
-- subtotal
-- tax
-- total
+**employees**
+- employee_id
+- name 
+- phone 
+- status 
 
-**returns**
-- return_id
-- name
-- status
+**categories**
+- category_id
+- name 
+- status 
 
 ---
 
 ### Relaciones
 
-- purchases → suppliers
-- purchase_details → purchases
-- purchase_details → products
-- sales → clients
-- sales_details → sales
-- sales_details → products
-- accounts_receivable → sales
-- returns → sales
+- products → suppliers  
+- products → categories  
+- sales → clients  
+- sales → employees  
+- sales_details → sales  
+- sales_details → products  
 
 ---
 
