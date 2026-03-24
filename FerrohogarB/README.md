@@ -507,5 +507,5 @@ CREATE TABLE sales_details (
 
 
 ## 8. CONCLUSIONES
-El desarrollo del proyecto permitió comprender el diseño e implementación de bases de datos relacionales en múltiples motores.
+El desarrollo del proyecto permitió comprender y analizar el diseño e implementación de bases de datos relacionales en múltiples motores.
 Se logró implementar correctamente el modelo en diferentes entornos, identificando diferencias en sintaxis y funcionamiento entre cada motor
