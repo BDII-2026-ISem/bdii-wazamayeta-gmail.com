@@ -9,3 +9,7 @@ en este paso se muestran las tablas
 aqui agrego los datos relacionados entre dos tablas
 
 ![](images/clipboard-2972120091.png)
+
+usamos la sentencia BETWEEN para  empezar la comparación entre las dos tablas para asi mismo anidarlos con la sentencia AND para comparar los DATES (fechas) para completar la consulta
+
+![](images/clipboard-3276888219.png)
