@@ -1,21 +1,32 @@
----
-title: "MySql-Semana9"
-output: html_document
----
+------------------------------------------------------------------------
 
-Aqui en este markdown haremos todo el proceso pedido en la actividad de la semana 9 empezamos con el proceso de agregar registros con MOCKAROO, y al solicitarlos, se nos retorna un archivo sql, con todos los datos para cada tabla
+#  Actividad Semana 9 - Base de Datos
+
+En este documento se presenta todo el proceso solicitado en la actividad de la semana 9.
+
+------------------------------------------------------------------------
+
+#  1. Generación de datos con Mockaroo
+
+Para comenzar, se utilizó la herramienta **Mockaroo** para generar registros de prueba.
+
+Al solicitar los datos, se obtiene un archivo SQL con todos los registros necesarios para cada tabla.
 
 ![](images/clipboard-2928949879.png){width="600"}
 
-como se muestra en la imagen
+Como se muestra en la imagen.
 
-despues de haber hecho el primer punto, realizaremos el segundo que es hacer consultas avanzadas con operadores logicos y beetwen, and Like
+------------------------------------------------------------------------
 
-Empezamos usando el primer operador logico
+#  2. Consultas avanzadas con operadores
 
-1.  "=" o "Igualdad"
+Después de generar los datos, se realizan consultas usando operadores lógicos como:
 
-Usaremos la siguiente consulta
+`=`, `>`, `>=`, `<`, `<=`, `LIKE`, `BETWEEN`
+
+------------------------------------------------------------------------
+
+## 2.1 Operador "=" (Igualdad)
 
 ``` sql
 SELECT *
@@ -23,13 +34,13 @@ FROM clients
 WHERE status = 'Activo';
 ```
 
-Donde se filtran los clientes donde su estatus este en "Activo", dandonos comoi resultado
+Filtra los clientes cuyo estado sea **Activo**.
 
 ![](images/clipboard-2968842538.png){width="560"}
 
-2.  "\>" o "Mayor Que"
+------------------------------------------------------------------------
 
-Usaremos la siguiente consulta
+## 2.2 Operador "\>" (Mayor que)
 
 ``` sql
 SELECT *
@@ -37,13 +48,13 @@ FROM sales
 WHERE total > 100;
 ```
 
-Donde se muestra las ventas cuyo total es mayor a 100.
+Muestra las ventas cuyo total es mayor a 100.
 
 ![](images/clipboard-2593370976.png){width="531"}
 
-3.  "\>=" o "Mayor o Igual"
+------------------------------------------------------------------------
 
-Usaremos la siguiente consulta
+## 2.3 Operador "\>=" (Mayor o igual)
 
 ``` sql
 SELECT *
@@ -55,9 +66,9 @@ Obtiene las ventas con total mayor o igual a 50.
 
 ![](images/clipboard-3121602612.png){width="543"}
 
-4.  "\<" o "menor que"
+------------------------------------------------------------------------
 
-    Usaremos la siguiente consulta
+## 2.4 Operador "\<" (Menor que)
 
 ``` sql
 SELECT *
@@ -65,13 +76,13 @@ FROM sales_details
 WHERE quantity < 9;
 ```
 
-Muestra los productos con una cantidad menor que 9.
+Muestra los productos con cantidad menor a 9.
 
 ![](images/clipboard-2301704793.png){width="492"}
 
-5.  "\<=" o "menor o igual que"
+------------------------------------------------------------------------
 
-    Usaremos la siguiente consulta
+## 2.5 Operador "\<=" (Menor o igual)
 
 ``` sql
 SELECT * 
@@ -79,50 +90,253 @@ FROM sales_details
 WHERE quantity <= 8;
 ```
 
-Muestra los productos con una cantidad menor o igual que 8.
+Muestra los productos con cantidad menor o igual a 8.
 
 ![](images/clipboard-1555395350.png)
 
-6.  "Like"
+------------------------------------------------------------------------
 
-    Usaremos la siguiente consulta
+## 2.6 Operador LIKE
 
-    ``` sql
-    SELECT *
+``` sql
+SELECT *
+FROM clients
+WHERE email LIKE 'm%';
+```
+
+Busca clientes cuyo correo comienza con la letra "m".
+
+![](images/clipboard-2728769682.png)
+
+------------------------------------------------------------------------
+
+## 2.7 Operador BETWEEN
+
+``` sql
+SELECT *
+FROM sales
+WHERE sale_date BETWEEN '2025-01-01' AND '2025-12-31';
+```
+
+Obtiene las ventas realizadas dentro del año 2025.
+
+![](images/clipboard-2862545811.png)
+
+------------------------------------------------------------------------
+
+## 2.8 Consulta combinada
+
+``` sql
+SELECT C.name, V.total
+FROM clients C
+JOIN sales V ON C.id = V.id_clients
+WHERE V.total >= 50
+AND V.sale_date BETWEEN '2025-01-01' AND '2026-01-01';
+```
+
+Muestra los clientes con ventas mayores o iguales a 50 dentro de un rango de fechas.
+
+![](images/clipboard-1655089596.png)
+
+------------------------------------------------------------------------
+
+# 3. Consultas de agrupamiento
+
+------------------------------------------------------------------------
+
+## 3.1 Agrupamiento con 1 tabla
+
+``` sql
+SELECT status, COUNT(*) AS total_clientes
+FROM clients
+GROUP BY status;
+```
+
+Agrupa los clientes por estado y cuenta cuántos hay en cada grupo.
+
+![](images/clipboard-2537964063.png)
+
+------------------------------------------------------------------------
+
+###  Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_1tabla AS
+SELECT status, COUNT(*) AS total_clientes
+FROM clients
+GROUP BY status;
+```
+
+![](images/clipboard-2507283680.png)
+
+Verificación en la sección de vistas:
+
+![](images/clipboard-2352191906.png){width="257"}
+
+Source:
+
+![](images/clipboard-680676448.png){width="261"}
+
+Datos:
+
+![](images/clipboard-3670222771.png){width="264"}
+
+------------------------------------------------------------------------
+
+###  Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_1tabla()
+BEGIN
+    SELECT status, COUNT(*) AS total_clientes
     FROM clients
-    WHERE email LIKE 'm%';
-    ```
+    GROUP BY status;
+END;
+```
 
-    Busca clientes cuyo correo comienza con la letra "m".
+![](images/clipboard-3546340718.png)
 
-    ![](images/clipboard-2728769682.png)
+Verificación:
 
-7.  "between" o "rango"
+![](images/clipboard-2326766343.png){width="247"}
 
-    -    Usaremos la siguiente consulta
+Source:
 
-        ``` sql
-        SELECT *
-        FROM sales
-        WHERE sale_date BETWEEN '2025-01-01' AND '2025-12-31';
-        ```
+![](images/clipboard-2398801967.png){width="248"}
 
-        Obtiene las ventas realizadas dentro del año 2025.
+------------------------------------------------------------------------
 
-    ![](images/clipboard-2862545811.png)
+## 3.2 Agrupamiento con 2 tablas
 
-Para ultima consulta, haremos una donde se apliquen todas o la mayoria de las consultas hechas anteriormente en una sola
+``` sql
+SELECT C.name, COUNT(V.id) AS total_ventas
+FROM clients C
+JOIN sales V ON C.id = V.id_clients
+GROUP BY C.name;
+```
 
--    Usaremos la siguiente consulta
+Cuenta cuántas ventas ha realizado cada cliente.
 
-    ``` sql
-    SELECT C.name, V.total
+![](images/clipboard-3376786870.png)
+
+------------------------------------------------------------------------
+
+###  Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_1tabla AS
+SELECT status, COUNT(*) AS total_clientes
+FROM clients
+GROUP BY status;
+```
+
+![](images/clipboard-3016062368.png)
+
+Verificación:
+
+![](images/clipboard-1564425218.png){width="258"}
+
+Source:
+
+![](images/clipboard-1808644884.png){width="259"}
+
+Datos:
+
+![](images/clipboard-662863311.png){width="277"}
+
+------------------------------------------------------------------------
+
+###  Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_2tablas()
+BEGIN
+    SELECT C.name, COUNT(V.id) AS total_ventas
     FROM clients C
     JOIN sales V ON C.id = V.id_clients
-    WHERE V.total >= 50
-    AND V.sale_date BETWEEN '2025-01-01' AND '2026-01-01';
-    ```
+    GROUP BY C.name;
+END;
+```
 
-    Donde Nos muestra los clientes con ventas mayores o igual a 50 dentro de un rango de fechas
+![](images/clipboard-1606761876.png){width="477"}
 
-    ![](images/clipboard-1655089596.png)
+Verificación:
+
+![](images/clipboard-3942903105.png){width="265"}
+
+Source:
+
+![](images/clipboard-409484162.png){width="276"}
+
+------------------------------------------------------------------------
+
+## 3.3 Agrupamiento con 3 tablas
+
+``` sql
+SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado
+FROM clients C
+JOIN sales V ON C.id = V.id_clients
+JOIN sales_details PV ON V.id = PV.id_sales
+JOIN products P ON P.id = PV.id_products
+GROUP BY C.name, P.name;
+```
+
+Muestra cuánto ha comprado cada cliente de cada producto.
+
+![](images/clipboard-1814908887.png)
+
+------------------------------------------------------------------------
+
+###  Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_3tablas AS
+SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado
+FROM clients C
+JOIN sales V ON C.id = V.id_clients
+JOIN sales_details PV ON V.id = PV.id_sales
+JOIN products P ON P.id = PV.id_products
+GROUP BY C.name, P.name;
+```
+
+![](images/clipboard-325409901.png)
+
+Verificación:
+
+![](images/clipboard-2175561479.png){width="249"}
+
+Source:
+
+![](images/clipboard-3504277851.png){width="256"}
+
+Datos:
+
+![](images/clipboard-3877995662.png){width="257"}
+
+------------------------------------------------------------------------
+
+###  Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_3tablas()
+BEGIN
+    SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado
+    FROM clients C
+    JOIN sales V ON C.id = V.id_clients
+    JOIN sales_details PV ON V.id = PV.id_sales
+    JOIN products P ON P.id = PV.id_products
+    GROUP BY C.name, P.name;
+END;
+```
+
+![](images/clipboard-3532691589.png)
+
+Verificación:
+
+![](images/clipboard-4056144819.png){width="310"}
+
+Source:
+
+![](images/clipboard-3173758032.png){width="330"}
+
+------------------------------------------------------------------------
