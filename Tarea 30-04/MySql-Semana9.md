@@ -339,4 +339,213 @@ Source:
 
 ![](images/clipboard-3173758032.png){width="330"}
 
+Aqui Empezaremos con las subconsultas
+
+Utilizamos este script
+
+### subconsultas con 1 tabla
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_3tablas() BEGIN     SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado     FROM clients C     JOIN sales V ON C.id = V.id_clients     JOIN sales_details PV ON V.id = PV.id_sales     JOIN products P ON P.id = PV.id_products     GROUP BY C.name, P.name; END;
+```
+
 ------------------------------------------------------------------------
+
+Muestra los clientes que **han realizado al menos una venta**.
+
+![](images/clipboard-3812621531.png)
+
+### Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_1tabla AS
+SELECT *
+FROM clients
+WHERE id IN (
+    SELECT id_clients
+    FROM sales
+);
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-690320178.png)
+
+Verificamos:
+
+![](images/clipboard-424494512.png){width="282"}
+
+Source:
+
+![](images/clipboard-1467082597.png){width="291"}
+
+Datos:
+
+![](images/clipboard-854849806.png){width="338"}
+
+### Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_1tabla()
+BEGIN
+    SELECT *
+    FROM clients
+    WHERE id IN (
+        SELECT id_clients
+        FROM sales
+    );
+END;
+```
+
+![](images/clipboard-411206826.png)
+
+Verificamos:
+
+![](images/clipboard-3174014046.png){width="301"}
+
+Source:
+
+![](images/clipboard-2241894667.png){width="349"}
+
+### subconsultas con 2 tabla
+
+``` sql
+SELECT *
+FROM clients
+WHERE id IN (
+    SELECT id_clients
+    FROM sales
+    WHERE total > 100
+);
+```
+
+Muestra los clientes que han realizado **ventas mayores a 100**.
+
+------------------------------------------------------------------------
+
+![](images/clipboard-2268236369.png)
+
+### Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_2tablas AS
+SELECT *
+FROM clients
+WHERE id IN (
+    SELECT id_clients
+    FROM sales
+    WHERE total > 100
+);
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-1258616950.png)
+
+Verificamos:
+
+![](images/clipboard-2544002067.png){width="286"}
+
+Source:
+
+![](images/clipboard-2691658178.png){width="312"}
+
+Datos:
+
+![](images/clipboard-2532632692.png){width="368"}
+
+### Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_2tablas()
+BEGIN
+    SELECT *
+    FROM clients
+    WHERE id IN (
+        SELECT id_clients
+        FROM sales
+        WHERE total > 100
+    );
+END;
+```
+
+![Verificamos:](images/clipboard-556676317.png)
+
+![](images/clipboard-144935683.png){width="286"}
+
+Source:
+
+![](images/clipboard-1206127491.png){width="345"}
+
+### subconsultas con 3 tabla
+
+``` sql
+SELECT *
+FROM clients
+WHERE id IN (
+    SELECT V.id_clients
+    FROM sales V
+    JOIN sales_details PV ON V.id = PV.id_sales
+    WHERE PV.quantity >= 5
+);
+```
+
+Muestra los clientes que han comprado productos con cantidad mayor o igual a 5.
+
+![](images/clipboard-2427047901.png)
+
+### Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_3tablas AS
+SELECT *
+FROM clients
+WHERE id IN (
+    SELECT V.id_clients
+    FROM sales V
+    JOIN sales_details PV ON V.id = PV.id_sales
+    WHERE PV.quantity >= 5
+);
+```
+
+![](images/clipboard-3570458528.png)
+
+Verificamos:
+
+![](images/clipboard-4220241333.png)
+
+Source:
+
+![](images/clipboard-458618288.png){width="354"}
+
+Datos:
+
+![](images/clipboard-1056124973.png)
+
+### Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_3tablas()
+BEGIN
+    SELECT *
+    FROM clients
+    WHERE id IN (
+        SELECT V.id_clients
+        FROM sales V
+        JOIN sales_details PV ON V.id = PV.id_sales
+        WHERE PV.quantity >= 5
+    );
+END;
+```
+
+![](images/clipboard-1138720722.png)
+
+Verificamos:
+
+![](images/clipboard-391580128.png){width="321"}
+
+Source:
+
+![](images/clipboard-2843406045.png){width="352"}
+
+Aqui Concluimos la actividad Terminada por medio de Dbeaver con el motor MySQL
