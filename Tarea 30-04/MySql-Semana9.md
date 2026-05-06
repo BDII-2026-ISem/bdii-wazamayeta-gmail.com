@@ -1,12 +1,14 @@
 ------------------------------------------------------------------------
 
-#  Actividad Semana 9 - Base de Datos
+# Actividad Semana 9 - Base de Datos
 
 En este documento se presenta todo el proceso solicitado en la actividad de la semana 9.
 
 ------------------------------------------------------------------------
 
-#  1. Generación de datos con Mockaroo
+# Gestor Dbeaver
+
+# 1. Generación de datos con Mockaroo
 
 Para comenzar, se utilizó la herramienta **Mockaroo** para generar registros de prueba.
 
@@ -18,7 +20,7 @@ Como se muestra en la imagen.
 
 ------------------------------------------------------------------------
 
-#  2. Consultas avanzadas con operadores
+# 2. Consultas avanzadas con operadores
 
 Después de generar los datos, se realizan consultas usando operadores lógicos como:
 
@@ -158,7 +160,7 @@ Agrupa los clientes por estado y cuenta cuántos hay en cada grupo.
 
 ------------------------------------------------------------------------
 
-###  Creación de la Vista
+### Creación de la Vista
 
 ``` sql
 CREATE VIEW vista_agrupamiento_1tabla AS
@@ -183,7 +185,7 @@ Datos:
 
 ------------------------------------------------------------------------
 
-###  Creación del Procedimiento
+### Creación del Procedimiento
 
 ``` sql
 CREATE PROCEDURE proc_agrupamiento_1tabla()
@@ -221,7 +223,7 @@ Cuenta cuántas ventas ha realizado cada cliente.
 
 ------------------------------------------------------------------------
 
-###  Creación de la Vista
+### Creación de la Vista
 
 ``` sql
 CREATE VIEW vista_agrupamiento_1tabla AS
@@ -246,7 +248,7 @@ Datos:
 
 ------------------------------------------------------------------------
 
-###  Creación del Procedimiento
+### Creación del Procedimiento
 
 ``` sql
 CREATE PROCEDURE proc_agrupamiento_2tablas()
@@ -287,7 +289,7 @@ Muestra cuánto ha comprado cada cliente de cada producto.
 
 ------------------------------------------------------------------------
 
-###  Creación de la Vista
+### Creación de la Vista
 
 ``` sql
 CREATE VIEW vista_agrupamiento_3tablas AS
@@ -315,7 +317,7 @@ Datos:
 
 ------------------------------------------------------------------------
 
-###  Creación del Procedimiento
+### Creación del Procedimiento
 
 ``` sql
 CREATE PROCEDURE proc_agrupamiento_3tablas()
@@ -549,3 +551,359 @@ Source:
 ![](images/clipboard-2843406045.png){width="352"}
 
 Aqui Concluimos la actividad Terminada por medio de Dbeaver con el motor MySQL
+
+# Gestor Workbench
+
+# 1. Generación de datos con Mockaroo
+
+Para comenzar, se utilizó la herramienta **Mockaroo** para generar registros de prueba.
+
+Al solicitar los datos, se obtiene un archivo SQL con todos los registros necesarios para cada tabla.
+
+![](images/clipboard-2928949879.png){width="600"}
+
+Como se muestra en la imagen.
+
+------------------------------------------------------------------------
+
+# 2. Consultas avanzadas con operadores
+
+Después de generar los datos, se realizan consultas usando operadores lógicos como:
+
+`=`, `>`, `>=`, `<`, `<=`, `LIKE`, `BETWEEN`
+
+primeramente usamos la base de datos ferrohogar en workbench
+
+![](images/clipboard-3733157963.png)
+
+------------------------------------------------------------------------
+
+## 2.1 Operador "=" (Igualdad)
+
+``` sql
+SELECT * 
+FROM clients 
+WHERE status = 'Activo';
+```
+
+Filtra los clientes cuyo estado sea **Activo**.![](images/clipboard-3539270338.png)
+
+------------------------------------------------------------------------
+
+## 2.2 Operador "\>" (Mayor que)
+
+``` sql
+SELECT * FROM sales WHERE total > 100;
+```
+
+Muestra las ventas cuyo total es mayor a 100.![](images/clipboard-1735322576.png)
+
+------------------------------------------------------------------------
+
+## 2.3 Operador "\>=" (Mayor o igual)
+
+``` sql
+SELECT * FROM sales WHERE total >= 50;
+```
+
+Obtiene las ventas con total mayor o igual a 50.![](images/clipboard-3176609603.png)
+
+------------------------------------------------------------------------
+
+## 2.4 Operador "\<" (Menor que)
+
+``` sql
+SELECT * FROM sales_details WHERE quantity < 9;
+```
+
+Muestra los productos con cantidad menor a 9.![](images/clipboard-1848960778.png)
+
+------------------------------------------------------------------------
+
+## 2.5 Operador "\<=" (Menor o igual)
+
+``` sql
+SELECT *  FROM sales_details  WHERE quantity <= 8;
+```
+
+Muestra los productos con cantidad menor o igual a 8.![](images/clipboard-302352709.png)
+
+------------------------------------------------------------------------
+
+## 2.6 Operador LIKE
+
+``` sql
+SELECT * FROM clients WHERE email LIKE 'm%';
+```
+
+Busca clientes cuyo correo comienza con la letra "m".![](images/clipboard-1574035691.png)
+
+------------------------------------------------------------------------
+
+## 2.7 Operador BETWEEN
+
+``` sql
+SELECT * FROM sales WHERE sale_date BETWEEN '2025-01-01' AND '2025-12-31';
+```
+
+Obtiene las ventas realizadas dentro del año 2025.![](images/clipboard-829468502.png)
+
+------------------------------------------------------------------------
+
+## 2.8 Consulta combinada
+
+``` sql
+SELECT C.name, V.total FROM clients C JOIN sales V ON C.id = V.id_clients WHERE V.total >= 50 AND V.sale_date BETWEEN '2025-01-01' AND '2026-01-01';
+```
+
+Muestra los clientes con ventas mayores o iguales a 50 dentro de un rango de fechas.![](images/clipboard-4173286356.png)
+
+------------------------------------------------------------------------
+
+# 3. Consultas de agrupamiento
+
+------------------------------------------------------------------------
+
+## 3.1 Agrupamiento con 1 tabla
+
+``` sql
+SELECT status, COUNT(*) AS total_clientes FROM clients GROUP BY status;
+```
+
+Agrupa los clientes por estado y cuenta cuántos hay en cada grupo.
+
+![](images/clipboard-476580693.png)
+
+------------------------------------------------------------------------
+
+### Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_1tabla AS SELECT status, COUNT(*) AS total_clientes FROM clients GROUP BY status;
+```
+
+![](images/clipboard-2362150789.png)Verificación en la sección de vistas:
+
+![](images/clipboard-900494466.png)
+
+Source:
+
+![](images/clipboard-2572100680.png)Datos:
+
+![](images/clipboard-2089676190.png)
+
+------------------------------------------------------------------------
+
+### Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_1tabla() BEGIN     SELECT status, COUNT(*) AS total_clientes     FROM clients     GROUP BY status; END;
+```
+
+![](images/clipboard-56714351.png)Verificación:
+
+![](images/clipboard-1915296995.png)
+
+------------------------------------------------------------------------
+
+## 3.2 Agrupamiento con 2 tablas
+
+``` sql
+SELECT C.name, COUNT(V.id) AS total_ventas FROM clients C JOIN sales V ON C.id = V.id_clients GROUP BY C.name;
+```
+
+Cuenta cuántas ventas ha realizado cada cliente.![](images/clipboard-4161010790.png)
+
+------------------------------------------------------------------------
+
+### Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_1tabla AS SELECT status, COUNT(*) AS total_clientes FROM clients GROUP BY status;
+```
+
+![](images/clipboard-4028087535.png)Verificación:
+
+![](images/clipboard-638722843.png)
+
+Source:
+
+![](images/clipboard-810096502.png)Datos:
+
+![](images/clipboard-1598092978.png)
+
+------------------------------------------------------------------------
+
+### Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_2tablas() BEGIN     SELECT C.name, COUNT(V.id) AS total_ventas     FROM clients C     JOIN sales V ON C.id = V.id_clients     GROUP BY C.name; END;
+```
+
+![](images/clipboard-3483808725.png)Verificación:
+
+![](images/clipboard-3329773033.png)
+
+Source:
+
+![](images/clipboard-87151240.png)
+
+------------------------------------------------------------------------
+
+## 3.3 Agrupamiento con 3 tablas
+
+``` sql
+SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado FROM clients C JOIN sales V ON C.id = V.id_clients JOIN sales_details PV ON V.id = PV.id_sales JOIN products P ON P.id = PV.id_products GROUP BY C.name, P.name;
+```
+
+Muestra cuánto ha comprado cada cliente de cada producto.![](images/clipboard-359926035.png)
+
+------------------------------------------------------------------------
+
+### Creación de la Vista
+
+``` sql
+CREATE VIEW vista_agrupamiento_3tablas AS SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado FROM clients C JOIN sales V ON C.id = V.id_clients JOIN sales_details PV ON V.id = PV.id_sales JOIN products P ON P.id = PV.id_products GROUP BY C.name, P.name;
+```
+
+![](images/clipboard-985322217.png)Verificación:
+
+![](images/clipboard-497795893.png)
+
+Source:
+
+![](images/clipboard-2972335761.png)Datos:
+
+![](images/clipboard-2652331126.png)
+
+------------------------------------------------------------------------
+
+### Creación del Procedimiento
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_3tablas() BEGIN     SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado     FROM clients C     JOIN sales V ON C.id = V.id_clients     JOIN sales_details PV ON V.id = PV.id_sales     JOIN products P ON P.id = PV.id_products     GROUP BY C.name, P.name; END;
+```
+
+![](images/clipboard-2957180941.png)Verificación:
+
+![](images/clipboard-365540982.png)
+
+Source:
+
+![](images/clipboard-3022681096.png)Aqui Empezaremos con las subconsultas
+
+Utilizamos este script
+
+### subconsultas con 1 tabla
+
+``` sql
+CREATE PROCEDURE proc_agrupamiento_3tablas() BEGIN     SELECT C.name AS cliente, P.name AS producto, SUM(PV.quantity) AS total_comprado     FROM clients C     JOIN sales V ON C.id = V.id_clients     JOIN sales_details PV ON V.id = PV.id_sales     JOIN products P ON P.id = PV.id_products     GROUP BY C.name, P.name; END;
+```
+
+------------------------------------------------------------------------
+
+Muestra los clientes que **han realizado al menos una venta**.
+
+### ![](images/clipboard-180794220.png)Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_1tabla AS SELECT * FROM clients WHERE id IN (     SELECT id_clients     FROM sales );
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-1930153531.png)Verificamos:
+
+![](images/clipboard-698316851.png)
+
+Source:
+
+![](images/clipboard-3602741129.png)Datos:
+
+### ![](images/clipboard-3965015306.png)Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_1tabla() BEGIN     SELECT *     FROM clients     WHERE id IN (         SELECT id_clients         FROM sales     ); END;
+```
+
+![](images/clipboard-3497006835.png)Verificamos:
+
+![](images/clipboard-2898805024.png)
+
+Source:
+
+### ![](images/clipboard-1370608618.png)subconsultas con 2 tabla
+
+``` sql
+SELECT * FROM clients WHERE id IN (     SELECT id_clients     FROM sales     WHERE total > 100 );
+```
+
+Muestra los clientes que han realizado **ventas mayores a 100**.
+
+------------------------------------------------------------------------
+
+### ![](images/clipboard-3364406446.png)Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_2tablas AS SELECT * FROM clients WHERE id IN (     SELECT id_clients     FROM sales     WHERE total > 100 );
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-2706991477.png)Verificamos:
+
+![](images/clipboard-1028594923.png)
+
+Source:
+
+![](images/clipboard-2725669942.png)Datos:
+
+### ![](images/clipboard-1222175311.png)Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_2tablas() BEGIN     SELECT *     FROM clients     WHERE id IN (         SELECT id_clients         FROM sales         WHERE total > 100     ); END;
+```
+
+![](images/clipboard-1734882229.png)
+
+verificamos
+
+![](images/clipboard-58025738.png)
+
+Source:
+
+### ![](images/clipboard-1336151096.png)subconsultas con 3 tabla
+
+``` sql
+SELECT * FROM clients WHERE id IN (     SELECT V.id_clients     FROM sales V     JOIN sales_details PV ON V.id = PV.id_sales     WHERE PV.quantity >= 5 );
+```
+
+Muestra los clientes que han comprado productos con cantidad mayor o igual a 5.
+
+### ![](images/clipboard-963807364.png)Creamos las vistas
+
+``` sql
+CREATE VIEW vista_subconsulta_3tablas AS SELECT * FROM clients WHERE id IN (     SELECT V.id_clients     FROM sales V     JOIN sales_details PV ON V.id = PV.id_sales     WHERE PV.quantity >= 5 );
+```
+
+![](images/clipboard-557411717.png)Verificamos:
+
+![](images/clipboard-592013562.png)
+
+Source:
+
+![](images/clipboard-159325096.png)Datos:
+
+### ![](images/clipboard-3897129694.png)Creamos los procedimientos
+
+``` sql
+CREATE PROCEDURE proc_subconsulta_3tablas() BEGIN     SELECT *     FROM clients     WHERE id IN (         SELECT V.id_clients         FROM sales V         JOIN sales_details PV ON V.id = PV.id_sales         WHERE PV.quantity >= 5     ); END;
+```
+
+![](images/clipboard-2018195103.png)Verificamos:
+
+![](images/clipboard-1205770426.png)
+
+Source:
+
+![](images/clipboard-1327082583.png)Aqui Concluimos la actividad Terminada por medio de Workbench con el motor MySQL
